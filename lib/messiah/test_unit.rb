@@ -1,0 +1,2 @@
+module Messiah::TestUnit
+end

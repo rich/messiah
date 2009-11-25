@@ -3,11 +3,6 @@ module Messiah::RSpec
     base.send(:include, Webrat::Methods)
     base.send(:include, Rack::Test::Methods)
     base.send(:include, Webrat::Matchers)
-  end
-  
-  def app
-    Rack::Builder.new {
-      run Messiah::RackCGIApp.new
-    }
-  end
+    base.send(:include, Messiah::Common)
+  end  
 end
