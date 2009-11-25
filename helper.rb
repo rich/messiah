@@ -7,11 +7,10 @@ require "rack/test"
 require "redgreen"
 gem "rspec"
 require "spec"
+require 'messiah'
 
-Webrat.configure do |config|
-  config.mode = :rack
-end
 
 Spec::Runner.configure do |config|
+  include Messiah::RSpec
 end
 

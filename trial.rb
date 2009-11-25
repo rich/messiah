@@ -1,7 +1,8 @@
+$: << './lib'
 require File.dirname(__FILE__) + '/helper'
-require File.dirname(__FILE__) + '/messiah'
 
-Messiah.root = '/Users/rich/Projects/sandbox/messiah/www'
+
+Messiah.root = File.join(File.dirname(__FILE__), 'www')
 # Messiah.script = 'index.php'
 Messiah.command = 'php-cgi -d cgi.force_redirect=0'
 
@@ -33,15 +34,6 @@ Messiah.command = 'php-cgi -d cgi.force_redirect=0'
 # require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe "Creating blog posts" do
-  include Webrat::Methods
-  include Rack::Test::Methods
-  include Webrat::Matchers
-  
-  def app
-    Rack::Builder.new {
-      run Messiah::CGIApp.new
-    }
-  end
   
   let(:body) {last_response.body}
   
