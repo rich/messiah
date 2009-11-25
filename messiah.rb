@@ -1,10 +1,11 @@
 module Messiah
   class << self
-    attr_accessor :root, :script, :command
+    attr_accessor :root, :script, :command, :host
   end
   
   class CGIApp
     def call(env)
+      env['HTTP_HOST'] = Messiah.host
       env['DOCUMENT_ROOT'] = Messiah.root
       env['SCRIPT_NAME'] = (Messiah.script || env['PATH_INFO']).gsub(/^\//, '')
       env['SCRIPT_FILENAME'] = env['PATH_TRANSLATED'] = File.join(env['DOCUMENT_ROOT'], env['SCRIPT_NAME'])

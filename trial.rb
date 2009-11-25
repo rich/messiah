@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/messiah'
 Messiah.root = '/Users/rich/Projects/sandbox/messiah/www'
 # Messiah.script = 'index.php'
 Messiah.command = 'php-cgi -d cgi.force_redirect=0'
+Messiah.host = 'tycoonu.dev'
 
 # class WebratRackTest < Test::Unit::TestCase
 #   include Rack::Test::Methods
@@ -38,9 +39,6 @@ describe "Creating blog posts" do
   
   def app
     Rack::Builder.new {
-      use Rack::ShowExceptions
-      use Rack::CommonLogger
-      use Rack::Lint
       run Messiah::CGIApp.new
     }
   end
@@ -50,6 +48,10 @@ describe "Creating blog posts" do
   def visit(url)
     u = url =~ /^\// ? url : "/#{url}"
     super(u)
+  end
+  
+  before(:all) do
+    
   end
   
   it "should accept headers" do
@@ -81,5 +83,16 @@ describe "Creating blog posts" do
   it "handles redirects" do
     visit "redirector.php"
     body.should contain "arrived"
+  end
+  
+  it "sets the host statically" do
+    visit "index.php"
+    body.should contain "Host is tycoonu.dev"
+  end
+  
+  it "sets the host dynamically" do
+    Messiah.host = "sectorhunter.dev"
+    visit "index.php"
+    body.should contain "Host is sectorhunter.dev"
   end
 end
