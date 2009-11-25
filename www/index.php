@@ -1,5 +1,5 @@
 <?php
-
+echo $_SERVER['HTTP_NOPE'];
 setcookie('a-cookie', 'thing');
 echo "Hello";
 ?>
