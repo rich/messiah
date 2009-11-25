@@ -35,7 +35,6 @@ describe "Creating blog posts" do
   include Webrat::Methods
   include Rack::Test::Methods
   include Webrat::Matchers
-  include Test::Unit::Assertions
   
   def app
     Rack::Builder.new {
@@ -46,8 +45,11 @@ describe "Creating blog posts" do
     }
   end
   
-  def body
-    last_response.body
+  let(:body) {last_response.body}
+  
+  def visit(url)
+    u = url =~ /^\// ? url : "/#{url}"
+    super(u)
   end
   
   it "should accept headers" do
@@ -57,27 +59,27 @@ describe "Creating blog posts" do
   end
   
   it "visits the page" do
-    request("/index.php").should be_ok
+    request("index.php").should be_ok
   end
   
   it "doesn't respond positively to unknown files" do
-    request("/nope.php").should_not be_ok
+    request("nope.php").should_not be_ok
   end
 
   it "clicks a link" do
-    visit "/index.php"
+    visit "index.php"
     click_link "Click Me"
-    body.should contain("another page")
+    body.should contain "another page"
   end
   
   it "handles cookies properly" do
-    visit "/index.php"
+    visit "index.php"
     click_link "Click Me"
-    body.should contain("Hello thing")
+    body.should contain "Hello thing"
   end
   
   it "handles redirects" do
-    visit "/redirector.php"
-    body.should contain("arrived")
+    visit "redirector.php"
+    body.should contain "arrived"
   end
 end
