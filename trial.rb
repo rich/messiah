@@ -75,4 +75,9 @@ describe "Creating blog posts" do
     click_link "Click Me"
     body.should contain("Hello thing")
   end
+  
+  it "handles redirects" do
+    visit "/redirector.php"
+    body.should contain("arrived")
+  end
 end
