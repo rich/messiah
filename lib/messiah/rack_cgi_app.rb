@@ -1,5 +1,3 @@
-require 'open3'
-
 class Messiah::RackCGIApp
   def call(env)
     add_to_environment!(env)

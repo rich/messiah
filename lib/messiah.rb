@@ -1,3 +1,9 @@
+require 'webrat'
+require 'rack/request'
+require 'rack/response'
+require "rack/test"
+require 'open3'
+
 module Messiah
   autoload :RSpec,      'messiah/rspec'
   autoload :TestUnit,   'messiah/test_unit'
