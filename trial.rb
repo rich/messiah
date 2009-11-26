@@ -1,4 +1,5 @@
 $: << './lib'
+require 'messiah'
 require File.dirname(__FILE__) + '/helper'
 
 
@@ -90,5 +91,24 @@ describe "Creating blog posts" do
   it "sets the host statically" do
     visit "index.php"
     body.should contain "Host is tycoonu.dev"
+  end
+  
+  it "handles post variables" do
+    visit "form.php"
+    fill_in "name", :with => 'Rich'
+    click_button "Submit"
+    body.should contain "Your name is Rich"
+  end
+  
+  it "handles get variables" do
+    visit "get_vars.php?first_name=Rich&last_name=Cavanaugh"
+    body.should contain "Your name is Rich Cavanaugh"
+  end
+  
+  it "handles file uploads" do
+    visit "uploader.php"
+    attach_file "File", __FILE__, "text/ruby"
+    click_button "Upload"
+    body.should contain "[uploaded_file]"
   end
 end

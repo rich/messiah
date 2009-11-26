@@ -1,0 +1,1 @@
+<?php echo "Your name is " . $_GET['first_name'] . ' ' . $_GET['last_name']; ?>

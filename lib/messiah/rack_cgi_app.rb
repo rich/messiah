@@ -2,10 +2,12 @@ class Messiah::RackCGIApp
   def call(env)
     add_to_environment!(env)
     env_string = build_environment_string(env)
-    
+
     stdin, stdout, stderr = Open3.popen3("env #{env_string} #{Messiah.command}")
+    stdin.write env['rack.input'].read
+    stdin.close
+    
     response = stdout.read
-    # puts stderr.read
     header, body = response.split("\n\r", 2)
 
     headers = header.split("\n").inject({}) do |h, line|
