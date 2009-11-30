@@ -9,9 +9,19 @@ module Messiah
   autoload :TestUnit,   'messiah/test_unit'
   autoload :RackCGIApp, 'messiah/rack_cgi_app'
   autoload :Common,     'messiah/common'
-  
+  autoload :Config,     'messiah/config'
+
   class << self
-    attr_accessor :root, :script, :command, :host
+    attr_accessor :config
+
+    def configure(&block)
+      @config ||= Config.new
+      @config.instance_eval(&block)
+    end
+    
+    def method_missing(key, *args, &block)
+      @config.send(key, *args, &block)
+    end
   end
 end
 

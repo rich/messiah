@@ -2,11 +2,33 @@ $: << './lib'
 require 'messiah'
 require File.dirname(__FILE__) + '/helper'
 
+Messiah.configure do
+  # script 'index.php'
+  root File.join(File.dirname(__FILE__), 'www')
+  command 'php-cgi -d cgi.force_redirect=0'
+  
+  database_connection do
+    {
+      :host       => '127.0.0.1',
+      :username   => 'rich',
+      :password   => 'rich',
+      :adapter    => 'mysql',
+      :database   => 'phoenix'
+    }
+  end
+end
 
-Messiah.root = File.join(File.dirname(__FILE__), 'www')
-# Messiah.script = 'index.php'
-Messiah.command = 'php-cgi -d cgi.force_redirect=0'
+require 'activerecord'
+ActiveRecord::Base.establish_connection Messiah.database_connection.call
+require 'dr_nic_magic_models'
+require 'factory_girl'
 
+Factory.define :user do |u|
+  u.first_name 'John'
+  u.last_name  'Doe'
+end
+
+puts Factory.build(:user).inspect
 
 # class WebratRackTest < Test::Unit::TestCase
 #   include Rack::Test::Methods
@@ -44,7 +66,7 @@ describe "Creating blog posts" do
   end
   
   def host(val)
-    Messiah.host = val
+    Messiah.config.host val
   end
   
   before(:each) do
@@ -64,7 +86,7 @@ describe "Creating blog posts" do
   it "doesn't respond positively to unknown files" do
     request("nope.php").should_not be_ok
   end
-
+  
   it "clicks a link" do
     visit "index.php"
     click_link "Click Me"
@@ -81,7 +103,7 @@ describe "Creating blog posts" do
     visit "redirector.php"
     body.should contain "arrived"
   end
-
+  
   it "sets the host dynamically" do
     host "sectorhunter.dev"
     visit "index.php"
