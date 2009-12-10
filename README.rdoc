@@ -1,0 +1,21 @@
+= Messiah
+
+Messiah enables using Ruby testing tools for integration testing with platforms that support CGI. Notably, PHP.
+
+== Configuration: RSpec
+
+In the spec_helper.rb file, configure Messiah. Specifically, the app root and the command used to execute your app via CGI. Once the app is configured, include Messiah into RSpec.
+
+	Messiah.configure do
+	  root File.join(File.dirname(__FILE__), 'fixtures', 'www')
+	  command 'php-cgi -d cgi.force_redirect=0'
+	end
+
+	Spec::Runner.configure do |config|
+	  include Messiah::RSpec
+	end
+
+== Copyright
+
+Copyright (c) 2009 Rich Cavanaugh. See LICENSE for details.
+
