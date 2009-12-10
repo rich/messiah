@@ -13,7 +13,7 @@ describe "Messiah" do
   end
   
   before(:each) do
-    host "tycoonu.dev"
+    host "example.dev"
   end
   
   it "should accept headers" do
@@ -48,14 +48,14 @@ describe "Messiah" do
   end
   
   it "sets the host dynamically" do
-    host "sectorhunter.dev"
+    host "example-two.dev"
     visit "index.php"
-    body.should contain "Host is sectorhunter.dev"
+    body.should contain "Host is example-two.dev"
   end
   
   it "sets the host statically" do
     visit "index.php"
-    body.should contain "Host is tycoonu.dev"
+    body.should contain "Host is example.dev"
   end
   
   it "handles post variables" do
