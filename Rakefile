@@ -8,6 +8,10 @@ begin
     gemspec.email = "rich@withoutscope.com"
     gemspec.homepage = "http://github.com/rich/messiah"
     gemspec.authors = ["Rich Cavanaugh"]
+
+    gemspec.add_dependency('webrat')
+    gemspec.add_dependency('rack')
+    gemspec.add_dependency('rack-test')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install jeweler"
