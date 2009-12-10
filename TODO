@@ -1,3 +1,5 @@
+ documentation
+ 
  properly integrate magic_models so it doesn't always load with messiah itself
  integrate the database handling callbacks and factory_girl
  integrate rubigen for getting an app working with messiah
