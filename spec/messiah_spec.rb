@@ -77,7 +77,7 @@ describe "Messiah" do
     body.should contain "[uploaded_file]"
   end
 
-  it "does stuff" do
+  it "handles environments that drive every request through one script" do
     Messiah.script 'path_info.php'
     visit '/hello/there'
     body.should contain '/hello/there'
