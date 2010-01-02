@@ -1,0 +1,13 @@
+require 'spec'
+require 'spec/autorun'
+require 'messiah'
+
+Messiah.configure do
+  root <%= root =~ /__FILE__/ ? root : %Q|"#{root}"| %>
+  command "<%= command %>"
+  script <%= script.nil?() ? %q|nil| : %Q|"#{script}"| %>
+end
+
+Spec::Runner.configure do |config|
+end
+

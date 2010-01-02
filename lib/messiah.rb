@@ -32,17 +32,5 @@ module Messiah
     def method_missing(key, *args, &block)
       @config.send(key, *args, &block)
     end
-
-    def rspec?
-      defined?(Spec::Runner)
-    end
-
-    def cucumber?
-      defined?(Cucumber)
-    end
-
-    def test_unit?
-      defined?(Test::Unit)
-    end
   end
 end
