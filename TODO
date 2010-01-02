@@ -3,3 +3,4 @@
  properly integrate magic_models so it doesn't always load with messiah itself
  integrate the database handling callbacks and factory_girl
  integrate rubigen for getting an app working with messiah
+ look at using the database_cleaner gem http://github.com/bmabey/database_cleaner/

@@ -10,5 +10,4 @@ Messiah.configure do
 end
 
 Spec::Runner.configure do |config|
-  include Messiah::RSpec
 end

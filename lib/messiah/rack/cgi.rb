@@ -1,4 +1,4 @@
-class Messiah::RackCGIApp
+class Messiah::Rack::CGI
   def call(env)
     add_to_environment!(env)
     header_string, body = call_cgi(env)

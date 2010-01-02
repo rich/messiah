@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby -rubygems
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'messiah'
+Messiah::Generator.run_cli Dir.pwd, $0, Messiah::VERSION, ARGV
