@@ -8,6 +8,7 @@ module Messiah
   autoload :Rack,       'messiah/rack'
   autoload :Common,     'messiah/common'
   autoload :Config,     'messiah/config'
+  autoload :Configurator, 'messiah/configurator'
   autoload :Generator,  'messiah/generator'
 
   module Supports
@@ -25,15 +26,23 @@ module Messiah
       @config ||= Config.new
       @config.instance_eval(&block)
 
-      Object.send(:include, Messiah::Supports::RSpec) if defined?(Spec::Runner)
-
-      Webrat.configure do |config|
-        config.mode = :rack
-      end
+      Configurator.configure!(@config)
     end
 
     def method_missing(key, *args, &block)
       @config.send(key, *args, &block)
+    end
+
+    def rspec?
+      defined?(Spec::Runner)
+    end
+
+    def cucumber?
+      defined?(Cucumber)
+    end
+
+    def test_unit?
+      defined?(Test::Unit)
     end
   end
 end
