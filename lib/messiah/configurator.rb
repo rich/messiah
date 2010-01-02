@@ -10,10 +10,10 @@ class Messiah::Configurator
     Object.send(:include, Messiah::Supports::Cucumber) if world.cucumber?
     Object.send(:include, Messiah::Supports::TestUnit) if world.test_unit?
     
-    world.configure_rack!
+    world.configure_webrat!
   end
 
-  def configure_rack!
+  def configure_webrat!
     Webrat.configure do |config|
       config.mode = :rack
     end
