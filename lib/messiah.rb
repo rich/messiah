@@ -26,14 +26,14 @@ module Messiah
       @config.instance_eval(&block)
 
       Object.send(:include, Messiah::Supports::RSpec) if defined?(Spec::Runner)
+
+      Webrat.configure do |config|
+        config.mode = :rack
+      end
     end
 
     def method_missing(key, *args, &block)
       @config.send(key, *args, &block)
     end
   end
-end
-
-Webrat.configure do |config|
-  config.mode = :rack
 end
