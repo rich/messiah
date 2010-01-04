@@ -5,13 +5,14 @@ require "rack/test"
 require 'open3'
 
 module Messiah
-  autoload :Rack,       'messiah/rack'
-  autoload :Common,     'messiah/common'
-  autoload :Config,     'messiah/config'
+  autoload :Rack,         'messiah/rack'
+  autoload :Common,       'messiah/common'
+  autoload :Config,       'messiah/config'
   autoload :Configurator, 'messiah/configurator'
-  autoload :Generator,  'messiah/generator'
+  autoload :Generator,    'messiah/generator'
 
   module Supports
+    autoload :Common,   'messiah/supports/common'
     autoload :RSpec,    'messiah/supports/rspec'
     autoload :Cucumber, 'messiah/supports/cucumber'
     autoload :TestUnit, 'messiah/supports/test_unit'

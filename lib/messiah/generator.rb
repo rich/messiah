@@ -11,9 +11,11 @@ module Messiah::Generator
   
   autoload :Cucumber,   'messiah/generator/cucumber'
   autoload :RSpec,      'messiah/generator/rspec'
+  autoload :TestUnit,   'messiah/generator/test_unit'
 
-  add :cucumber, Cucumber
-  add :rspec, RSpec
+  add :cucumber,  Cucumber
+  add :rspec,     RSpec
+  add :test_unit, TestUnit
 
   desc "Setup a testing framework supported by Messiah in the current directory."
 end

@@ -3,7 +3,7 @@ class Messiah::Generator::RSpec < Templater::Generator
     File.join(Messiah::Generator.template_path, 'rspec')
   end
 
-  first_argument :root, :default => %q|File.join(File.dirname(__FILE__), '..')|
+  first_argument :root, :default => '.'
   second_argument :command, :default => 'php-cgi -d cgi.force_redirect=0'
   third_argument :script
 

@@ -1,4 +1,4 @@
-module Messiah::Common
+module Messiah::Supports::Common
   def self.included(base)
     base.send(:include, Webrat::Methods)
     base.send(:include, Rack::Test::Methods)

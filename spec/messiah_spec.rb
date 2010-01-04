@@ -2,16 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Messiah" do
   let(:body) {last_response.body}
-  
-  def visit(url)
-    u = url =~ /^\// ? url : "/#{url}"
-    super(u)
-  end
-  
-  def host(val)
-    Messiah.config.host val
-  end
-  
+
   before(:each) do
     host "example.dev"
   end
