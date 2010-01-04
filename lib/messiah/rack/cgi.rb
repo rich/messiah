@@ -7,10 +7,11 @@ class Messiah::Rack::CGI
   end
 
   def add_to_environment!(env)
-    env['HTTP_HOST'] = Messiah.host
+    env['SERVER_NAME'] = env['HTTP_HOST'] = Messiah.host
     env['DOCUMENT_ROOT'] = File.expand_path Messiah.root
     env['SCRIPT_NAME'] = (Messiah.script || env['PATH_INFO']).gsub(/^\//, '')
     env['SCRIPT_FILENAME'] = env['PATH_TRANSLATED'] = File.join(env['DOCUMENT_ROOT'], env['SCRIPT_NAME'])
+    env[Messiah.environment_key || 'APP_ENV'] = Messiah.environment_name || 'test'
   end
 
   def build_environment_string(env)
