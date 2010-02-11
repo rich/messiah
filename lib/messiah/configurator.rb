@@ -1,22 +1,39 @@
 class Messiah::Configurator
   def initialize(config)
     @config = config
+    configure_framework
+    configure_world
+    configure_webrat
+    configure_database if @config.database
   end
 
   def self.configure!(config)
-    world = new(config)
-
-    Spec::Example::ExampleGroup.send(:include, Messiah::Supports::RSpec) if world.rspec?
-    Object.send(:include, Messiah::Supports::Cucumber) if world.cucumber?
-    Object.send(:include, Messiah::Supports::TestUnit) if world.test_unit?
-    
-    world.configure_webrat!
+    new(config)
   end
 
-  def configure_webrat!
+  def configure_framework
+    @framwork = case @config.framework
+    when :code_igniter
+      Messiah::Supports::CodeIgniter.new(@config)
+    end
+  end
+
+  def configure_webrat
     Webrat.configure do |config|
       config.mode = :rack
     end
+  end
+
+  def configure_world
+    Spec::Example::ExampleGroup.send(:include, Messiah::Supports::RSpec) if rspec?
+    Object.send(:include, Messiah::Supports::Cucumber) if cucumber?
+    Object.send(:include, Messiah::Supports::TestUnit) if test_unit?
+  end
+
+  def configure_database
+    require 'active_record'
+    ActiveRecord::Base.establish_connection(@config.database)
+    require 'dr_nic_magic_models'
   end
 
   def rspec?

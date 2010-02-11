@@ -12,10 +12,11 @@ module Messiah
   autoload :Generator,    'messiah/generator'
 
   module Supports
-    autoload :Common,   'messiah/supports/common'
-    autoload :RSpec,    'messiah/supports/rspec'
-    autoload :Cucumber, 'messiah/supports/cucumber'
-    autoload :TestUnit, 'messiah/supports/test_unit'
+    autoload :Common,     'messiah/supports/common'
+    autoload :RSpec,      'messiah/supports/rspec'
+    autoload :Cucumber,   'messiah/supports/cucumber'
+    autoload :TestUnit,   'messiah/supports/test_unit'
+    autoload :CodeIgniter,'messiah/supports/code_igniter'
   end
 
   VERSION = File.read(File.join(File.dirname(__FILE__), '..', 'VERSION'))
@@ -32,6 +33,17 @@ module Messiah
 
     def method_missing(key, *args, &block)
       @config.send(key, *args, &block)
+    end
+
+    def configure_rspec(config)
+      config.before(:suite) do
+      end
+
+      config.before(:each) do
+      end
+
+      config.after(:each) do
+      end
     end
   end
 end

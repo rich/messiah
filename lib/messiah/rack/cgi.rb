@@ -24,7 +24,6 @@ class Messiah::Rack::CGI
 
   def call_cgi(env)
     env_string = build_environment_string(env)
-
     stdin, stdout, stderr = Open3.popen3("env #{env_string} #{Messiah.command}")
     stdin.write env['rack.input'].read if env['REQUEST_METHOD'] == 'POST'
     stdin.close
