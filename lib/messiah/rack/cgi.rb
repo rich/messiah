@@ -34,12 +34,12 @@ class Messiah::Rack::CGI
 
   def parse_headers(header)
     headers = header.split("\n").inject({}) do |h, line|
-      key, val = line.split(':').map(&:strip)
+      key, val = line.split(':', 2).map(&:strip)
       h[key] = val
       h
     end
     status = headers.delete('Status') || 200
 
-    [headers, status]
+    [headers, status.to_i]
   end
 end
