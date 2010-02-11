@@ -12,6 +12,7 @@ class Messiah::Rack::CGI
     env['SCRIPT_NAME'] = (Messiah.script || env['PATH_INFO']).gsub(/^\//, '')
     env['SCRIPT_FILENAME'] = env['PATH_TRANSLATED'] = File.join(env['DOCUMENT_ROOT'], env['SCRIPT_NAME'])
     env[Messiah.environment_key || 'APP_ENV'] = Messiah.environment_name || 'test'
+    env[Messiah.test_root_key || 'X-TEST-ROOT'] = Messiah.test_root
   end
 
   def build_environment_string(env)

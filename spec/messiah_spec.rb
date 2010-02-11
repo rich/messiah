@@ -68,6 +68,36 @@ describe "Messiah" do
     body.should contain "[uploaded_file]"
   end
 
+  it "passes the application environment using the default key" do
+    visit 'env.php?key=APP_ENV'
+    body.should contain 'The key APP_ENV exists and is test'
+  end
+
+  it "passes the application environment using a custom key" do
+    Messiah.environment_key 'X-APP-ENV'
+    visit 'env.php?key=X-APP-ENV'
+    body.should contain 'The key X-APP-ENV exists and is test'
+  end
+  
+  it "passes the test root using the default key" do
+    Messiah.test_root 'WOOHOO'
+    visit 'env.php?key=X-TEST-ROOT'
+    body.should contain 'The key X-TEST-ROOT exists and is WOOHOO'
+  end
+
+  it "passes the test root using a custom key" do
+    Messiah.test_root 'WOOHOOCUSTOM'
+    Messiah.test_root_key 'MYHAPPYTESTROOT'
+    visit 'env.php?key=MYHAPPYTESTROOT'
+    body.should contain 'The key MYHAPPYTESTROOT exists and is WOOHOOCUSTOM'
+  end
+
+  it "passes the application environment using a custom key" do
+    Messiah.environment_key 'X-APP-ENV'
+    visit 'env.php?key=X-APP-ENV'
+    body.should contain 'The key X-APP-ENV exists and is test'
+  end
+
   it "handles environments that drive every request through one script" do
     Messiah.script 'path_info.php'
     visit '/hello/there'
