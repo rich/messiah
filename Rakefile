@@ -12,6 +12,9 @@ begin
     gemspec.add_dependency('webrat')
     gemspec.add_dependency('rack')
     gemspec.add_dependency('rack-test')
+    gemspec.add_dependency('activerecord')
+    gemspec.add_dependency('factory_girl')
+    gemspec.add_dependency('dr_nic_magic_models')
   end
 
   Jeweler::GemcutterTasks.new
