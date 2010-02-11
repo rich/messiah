@@ -34,6 +34,8 @@ class Messiah::Configurator
     require 'active_record'
     ActiveRecord::Base.establish_connection(@config.database)
     require 'dr_nic_magic_models'
+    DrNicMagicModels.extend_module_class!
+    DrNicMagicModels::Schema.new(Object).load_schema
   end
 
   def rspec?
