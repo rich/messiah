@@ -1,6 +1,6 @@
 class Messiah::Config
   attr_accessor :values
-  
+
   def respond_to?(key)
     true
   end

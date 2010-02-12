@@ -22,7 +22,7 @@ module Messiah
   VERSION = File.read(File.join(File.dirname(__FILE__), '..', 'VERSION'))
 
   class << self
-    attr_accessor :config
+    attr_accessor :config, :frozen_config
 
     def configure(&block)
       @config ||= Config.new
@@ -35,11 +35,21 @@ module Messiah
       @config.send(key, *args, &block)
     end
 
-    def configure_rspec(config)
+    def freeze_config!
+      @frozen_config = @config.values.clone
+    end
+
+    def reset_config!
+      @config.values = @frozen_config.clone
+    end
+
+    def rspec(config)
       config.before(:suite) do
+        Messiah.freeze_config!
       end
 
       config.before(:each) do
+        Messiah.reset_config!
       end
 
       config.after(:each) do

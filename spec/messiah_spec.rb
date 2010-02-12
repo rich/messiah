@@ -85,6 +85,12 @@ describe "Messiah" do
     body.should contain 'The key X-TEST-ROOT exists and is WOOHOO'
   end
 
+  it "handles environments that drive every request through one script" do
+    Messiah.script 'path_info.php'
+    visit '/hello/there'
+    body.should contain '/hello/there'
+  end
+  
   it "passes the test root using a custom key" do
     Messiah.test_root 'WOOHOOCUSTOM'
     Messiah.test_root_key 'MYHAPPYTESTROOT'
@@ -98,10 +104,10 @@ describe "Messiah" do
     body.should contain 'The key X-APP-ENV exists and is test'
   end
 
-  it "handles environments that drive every request through one script" do
+  it "resets the configuration to the frozen state" do
     Messiah.script 'path_info.php'
-    visit '/hello/there'
-    body.should contain '/hello/there'
+    Messiah.reset_config!
+    Messiah.script.should be_nil
   end
 end
 
