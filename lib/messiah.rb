@@ -50,6 +50,7 @@ module Messiah
 
       config.before(:each) do
         Messiah.reset_config!
+        DatabaseCleaner.clean
       end
 
       config.after(:each) do

@@ -39,6 +39,8 @@ class Messiah::Configurator
     DrNicMagicModels::Schema.new(Object).load_schema
 
     require 'factory_girl'
+    require 'database_cleaner'
+    DatabaseCleaner.strategy = :truncation
   end
 
   def rspec?
