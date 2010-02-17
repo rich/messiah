@@ -44,17 +44,26 @@ module Messiah
     end
 
     def rspec(config)
-      config.before(:suite) do
-        Messiah.freeze_config!
-      end
+      config.before(:suite, &Messiah.method(:before_suite))
+      config.before(:each, &Messiah.method(:before_test))
+      config.after(:each, &Messiah.method(:after_test))
+    end
 
-      config.before(:each) do
-        Messiah.reset_config!
-        DatabaseCleaner.clean if Messiah.database
-      end
+    def cucumber(world)
+      world.AfterConfiguration(&Messiah.method(:before_suite))
+      world.Before(&Messiah.method(:before_test))
+    end
 
-      config.after(:each) do
-      end
+    def before_suite(*args)
+      Messiah.freeze_config!
+    end
+
+    def before_test(*args)
+      Messiah.reset_config!
+      DatabaseCleaner.clean if Messiah.database
+    end
+
+    def after_test
     end
   end
 end
