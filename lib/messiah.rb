@@ -4,6 +4,10 @@ require 'rack/response'
 require "rack/test"
 require 'open3'
 
+unless defined?(RAILS_DEFAULT_LOGGER)
+  RAILS_DEFAULT_LOGGER = Logger.new(StringIO.new)
+end
+
 module Messiah
   autoload :Rack,         'messiah/rack'
   autoload :Common,       'messiah/common'
@@ -63,7 +67,7 @@ module Messiah
       DatabaseCleaner.clean if Messiah.database
     end
 
-    def after_test
+    def after_test(*args)
     end
   end
 end
