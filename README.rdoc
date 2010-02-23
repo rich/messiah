@@ -10,16 +10,47 @@ Messiah enables using Ruby testing tools for integration testing with platforms 
 
 In the spec_helper.rb file, configure Messiah. Specifically, the app root and the command used to execute your app via CGI. Once the app is configured, include Messiah into RSpec.
 
-	Messiah.configure do
-	  root File.join(File.dirname(__FILE__), 'fixtures', 'www')
-	  command 'php-cgi -d cgi.force_redirect=0'
-	end
+  Messiah.configure do
+    root File.join(File.dirname(__FILE__), 'fixtures', 'www')
+    command 'php-cgi -d cgi.force_redirect=0'
+  end
 
-	Spec::Runner.configure do |config|
-	  include Messiah::RSpec
-	end
+  Spec::Runner.configure do |config|
+    Messiah.rspec(config)
+  end
+
+== Configuration: Cucumber
+
+You configure Messiah in the env.rb file.
+
+  Messiah.configure do
+    root File.join(File.dirname(__FILE__), '..', '..', 'spec', 'fixtures', 'www')
+    command 'php-cgi -d cgi.force_redirect=0'
+  end
+
+  Messiah.cucumber(self)
+
+== Other Configuration Options
+
++test_root+ is the directory containing the test suite being run. This is passed to your application through an HTTP header. This can be used to source mocks from the fixtures directory.
++app_root+ is the directory that actually contains your application.
++host+ is the hostname that should be used in the requests.
++script+ is the name of the script all requests should be sent through. This is useful if your app uses PATH_INFO
++database+ is a hash containing the ActiveRecord connection parameters
+
+Any of the options may be set simply:
+
+  Messiah.host = 'ahost.example.local'
+
+The configuration values are automatically reset back to their original configured state prior to every test. This is useful if you need to test different hosts individually.
+
+== Database Support and a Warning
+
+Messiah will, by default, delete all data in the configured test database. Don't point it at your development database. This is to be sure the database is always starting with a known blank slate.
+
+The database support is functional but still has rough edges. It uses Dr. Nic's Magic Models gem for generating ActiveRecord models from your schema at runtime. factory_girl is the factory library used. Additional documentation is coming on the database support.
 
 == Copyright
 
-Copyright (c) 2009 Rich Cavanaugh. See LICENSE for details.
+Copyright (c) 2010 Rich Cavanaugh. See LICENSE for details.
 

@@ -15,6 +15,7 @@ begin
     gemspec.add_dependency('activerecord')
     gemspec.add_dependency('factory_girl')
     gemspec.add_dependency('dr_nic_magic_models')
+    gemspec.add_dependency('database_cleaner')
   end
 
   Jeweler::GemcutterTasks.new
